@@ -82,7 +82,6 @@ function sendRandomPositiveQuote(message){
 
 async function sendOsrsStats(message) {
   if (message.content.startsWith('!osrs')) {
-    // Remove the command and trim any extra whitespace
     const usernameInput = message.content.slice('!osrs'.length).trim();
     
     if (!usernameInput) {
