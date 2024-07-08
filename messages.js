@@ -1,6 +1,13 @@
 const fs = require('fs');
 const axios = require('axios');
 const memes = require("random-memes");
+const {
+  agents,
+  positiveQuotes
+} = require('./data');
+const{
+  getOSRSStats
+} = require('./osrs_stats');
 
 async function sendImage(message, imagePath, mentionID) {
   try {
@@ -63,10 +70,41 @@ async function getMeme() {
   return meme.image;
 }
 
+function sendRandomAgent(message) {
+  randomAgent = agents[Math.floor(Math.random() * agents.length)];
+  message.reply(`<@${message.author.id}> you should play ${randomAgent} in your next game`);
+}
+
+function sendRandomPositiveQuote(message){
+  randomQuote = positiveQuotes[Math.floor(Math.random() * positiveQuotes.length)];
+  message.reply(randomQuote);
+}
+
+async function sendOsrsStats(message) {
+  if (message.content.startsWith('!osrs')) {
+    // Remove the command and trim any extra whitespace
+    const usernameInput = message.content.slice('!osrs'.length).trim();
+    
+    if (!usernameInput) {
+      return message.reply('Please provide a username. Usage: !osrs <username>');
+    }
+
+    try {
+      const stats = await getOSRSStats(usernameInput);
+      message.reply(stats);
+    } catch (error) {
+      message.reply('Error fetching stats: ' + error.message);
+    }
+  }
+}
+
 module.exports = {
   sendImage,
   sendRandomResponse,
   handleRankCommand,
   getValorantRank,
-  getMeme
+  getMeme,
+  sendRandomAgent,
+  sendRandomPositiveQuote,
+  sendOsrsStats
 };

@@ -4,8 +4,12 @@ const {
   sendImage,
   sendRandomResponse,
   handleRankCommand,
-  getMeme
+  getMeme,
+  sendRandomAgent,
+  sendRandomPositiveQuote,
+  sendOsrsStats
 } = require('./messages');
+
 
 const client = new Client({
   intents: [
@@ -25,10 +29,10 @@ client.on("messageCreate", async message => {
   if (message.author.bot) return;
 
   const content = message.content.toLowerCase();
-  const mentionID = '373801680917102593';
+  
 
-  if (message.mentions.has(mentionID)) {
-    await sendImage(message, './IMG_2243.jpg', mentionID);
+  if (message.mentions.has(process.env.USER_ID)) {
+    await sendImage(message, './IMG_2243.jpg', process.env.USER_ID);
   }
 
   switch (content) {
@@ -50,6 +54,12 @@ client.on("messageCreate", async message => {
       const img = await getMeme();
       message.channel.send(img);
       break;
+    case "!agent":
+    sendRandomAgent(message);
+      break;
+    case "pma":
+      sendRandomPositiveQuote(message);
+      break;
     default:
       handleCommands(message, content);
       break;
@@ -66,6 +76,8 @@ function handleCommands(message, content) {
     message.reply("You know the best place to get sneak is: https://affiliates.sneakenergy.com/s/magsdata");
   } else if (content.startsWith("!rank")) {
     handleRankCommand(message);
+  } else if (content.startsWith("!osrs")) {
+    sendOsrsStats(message);
   }
 }
 
