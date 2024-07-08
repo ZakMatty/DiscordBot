@@ -58,13 +58,6 @@ const positiveQuotes = [
     "Positivity always wins…Always."
 ];
 
-
-
-
-
-
-
-
 module.exports = {
     agents,
     positiveQuotes
