@@ -40,8 +40,6 @@ async function getOSRSStats(username) {
     return output;
 }
 
-
-
 module.exports = {
     getOSRSStats
   };

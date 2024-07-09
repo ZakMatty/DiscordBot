@@ -39,6 +39,9 @@ client.on("messageCreate", async message => {
     case "ping":
       message.reply("Pong!");
       break;
+    case "meow":
+      message.reply("Meow");
+      break;
     case "uwucheck":
     case "uwu check":
     case "!uwucheck":

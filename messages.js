@@ -66,7 +66,13 @@ async function getValorantRank(username, tag) {
 }
 
 async function getMeme() {
-    const meme = await memes.reddit({ locale: "en", customSubredditName: "Funnymemes" });
+  const meme = await memes.reddit({ locale: "en", customSubredditName: "Funnymemes" });
+  
+  if (meme.image === "https://www.reddit.com/r/Funnymemes/comments/1drgzi7/mod_announcement_zero_tolerance_for_rule/") {
+    // Recursive call to get a different meme, if the meme is a mod message
+    return await getMeme();
+  }
+  
   return meme.image;
 }
 
