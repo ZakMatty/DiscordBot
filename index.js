@@ -31,6 +31,23 @@ client.on("messageCreate", async message => {
 
   const content = message.content.toLowerCase();
   
+  if (message.mentions.has(client.user.id) && !message.reference) {
+    const member = message.guild.members.cache.get(message.author.id);
+    const joinDate = member.joinedAt;
+
+    const day = String(joinDate.getDate()).padStart(2, '0');
+    const month = String(joinDate.getMonth() + 1).padStart(2, '0');
+    const year = joinDate.getFullYear();
+
+    const formattedDate = `${day}/${month}/${year}`;
+
+
+    const now = new Date();
+    const timeInServer = Math.floor((now - joinDate) / 1000);
+
+    message.reply(`Hi <@${message.author.id}>, you have been in this server since ${formattedDate}. This means you have been in the server for ${timeInServer} seconds.`);
+}
+
 
   if (message.mentions.has(process.env.BEN_USER_ID)) {
     await sendImage(message, './IMG_2243.jpg', process.env.BEN_USER_ID);
