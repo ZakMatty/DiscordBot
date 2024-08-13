@@ -7,7 +7,8 @@ const {
   getMeme,
   sendRandomAgent,
   sendRandomPositiveQuote,
-  sendOsrsStats
+  sendOsrsStats,
+  sendVideo
 } = require('./messages');
 
 
@@ -31,8 +32,12 @@ client.on("messageCreate", async message => {
   const content = message.content.toLowerCase();
   
 
-  if (message.mentions.has(process.env.USER_ID)) {
-    await sendImage(message, './IMG_2243.jpg', process.env.USER_ID);
+  if (message.mentions.has(process.env.BEN_USER_ID)) {
+    await sendImage(message, './IMG_2243.jpg', process.env.BEN_USER_ID);
+  }
+
+  if (message.mentions.has(process.env.MATTY_USER_ID)) {
+    await sendVideo(message, './whiff.mp4', process.env.MATTY_USER_ID);
   }
 
   switch (content) {
@@ -83,5 +88,4 @@ function handleCommands(message, content) {
     sendOsrsStats(message);
   }
 }
-
 client.login(process.env.CLIENT_TOKEN);

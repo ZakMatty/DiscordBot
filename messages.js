@@ -26,6 +26,23 @@ async function sendImage(message, imagePath, mentionID) {
   }
 }
 
+async function sendVideo(message, videoPath, mentionID) {
+  try {
+    if (!fs.existsSync(videoPath)) {
+      console.error(`Local video file ${videoPath} not found.`);
+      return;
+    }
+
+    const video = fs.readFileSync(videoPath);
+    await message.channel.send({
+      content: `You mentioned <@${mentionID}>!`,
+      files: [{ attachment: video, name: 'whiff.mp4' }]
+    });
+  } catch (error) {
+    console.error('Error sending local video:', error);
+  }
+}
+
 function sendRandomResponse(message,filler, type) {
   const randomNumber = Math.floor(Math.random() * 101);
   message.reply(`<@${message.author.id}> ${filler} ${randomNumber}% ${type}`);
@@ -111,5 +128,6 @@ module.exports = {
   getMeme,
   sendRandomAgent,
   sendRandomPositiveQuote,
-  sendOsrsStats
+  sendOsrsStats,
+  sendVideo
 };
